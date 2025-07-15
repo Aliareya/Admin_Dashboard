@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Sidebar from "./component/Sidebar";
-
+import Sidebar from "./component/layout/Sidebar";
+import Dashbaord from "./Dashbaord";
+import Topbar from "./component/layout/Topbar";
 function App() {
   const [showsidebar, setShowsidebar] = useState(true);
 
@@ -21,8 +22,12 @@ function App() {
         </div>
       </div>
       <div className={`${showsidebar?'w-[84%]' : 'w-full'} content h-auto`}>
-        <div className="topbar w-full h-16 bg-white border-b border-[#bdc0c5]"></div>
-        <div className="main w-full h-96 bg-slate-50"></div>
+        <div className="topbar w-full h-16 bg-white border-b border-[#bdc0c5]">
+          <Topbar/>
+        </div>
+        <div className="main w-full h-96 bg-slate-50 pl-1">
+          <Dashbaord/>
+        </div>
       </div>
     </div>
   );

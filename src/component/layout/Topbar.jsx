@@ -6,30 +6,28 @@ import { Icon } from "@iconify/react";
 import NotificationPopup from "../ui/popup/topbarpupops/NotificationPopup";
 import UserProfilePopup from "../ui/popup/topbarpupops/UserProfilePopup";
 
-function Topbar() {
+function Topbar({ setShowsidebar , showsidebar }) {
   const [userPupop, setUserPupop] = useState(false);
   const [notifictionPupop, setNotifictionPupop] = useState(false);
+  const mobaileSize = window.innerWidth;
 
   const userPopupRef = useRef(null);
   const notificationPopupRef = useRef(null);
 
   const notificationMenu = [
-    { title: "New Order" },
-    { title: "Product Inventory" },
-    { title: "Add New Product" },
+    { title: "New Order" ,path :'orders'},
+    { title: "New Customers",path:'customers' },
+    { title: "Add New Product", path:"products" },
   ];
 
   const UserProfileMenu = [
-    { title: "Profile" },
-    { title: "Setting" },
-    { title: "Supports" },
+    { title: "Profile", path:'profile' },
+    { title: "Setting" , path:'settings' },
+    { title: "Supports" , path : '/' },
   ];
 
   const handleClickOutside = (e) => {
-    if (
-      userPopupRef.current &&
-      !userPopupRef.current.contains(e.target)
-    ) {
+    if (userPopupRef.current && !userPopupRef.current.contains(e.target)) {
       setUserPupop(false);
     }
 
@@ -56,8 +54,24 @@ function Topbar() {
     setNotifictionPupop(!notifictionPupop);
   };
 
+  const handleSidebarToggle = () => {
+    setShowsidebar((prev) => !prev);
+  };
+
   return (
-    <div className="w-full h-16 flex gap-5 justify-end items-center px-3 relative">
+    <div className="w-full h-16 flex gap-5 justify-end items-center px-3  relative">
+      {mobaileSize <= 780 && (
+        <div className={`${showsidebar ? "left-40 max-sm:top-8 max-sm:left-32":"left-3" } lg:hidden w-8 h-8 absolute  flex justify-center items-center`}>
+          <Icon
+            onClick={handleSidebarToggle}
+            icon={showsidebar ? "line-md:menu-fold-left" : "line-md:menu-fold-right"}
+            width="35"
+            height="35"
+            style={{ color: "#134b4a" }}
+          />
+        </div>
+      )}
+
       {/* Notification Icon */}
       <div
         onClick={handlenotifictionPupop}
@@ -83,14 +97,12 @@ function Topbar() {
           className="w-10 h-10 bg-slate-600 rounded-full bg-center bg-cover border border-gray-400"
           style={{ backgroundImage: `url(${adminuser})` }}
         ></div>
-        <h3 className="text-sm font-semibold text-gray-700">
-          Alireza (Admin)
-        </h3>
+        <h3 className="text-sm font-semibold text-gray-700">Alireza (Admin)</h3>
       </div>
 
       {/* User Popup */}
       {userPupop && (
-        <UserProfilePopup ref={userPopupRef} menu={UserProfileMenu}/>
+        <UserProfilePopup ref={userPopupRef} menu={UserProfileMenu} />
       )}
 
       {/* Notification Popup */}

@@ -1,6 +1,8 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 function NotificationPopup({menu , ref}) {
+  const navigate = useNavigate();
   return (
     <div
           ref={ref}
@@ -13,6 +15,7 @@ function NotificationPopup({menu , ref}) {
           <div className="w-full overflow-y-auto max-h-[100px]">
             {menu.map((menu, index) => (
               <p
+                onClick={()=>navigate(`${menu.path}`)}
                 key={index}
                 className="text-[16px] text-gray-800 p-1 hover:bg-slate-100 rounded-sm cursor-pointer"
               >

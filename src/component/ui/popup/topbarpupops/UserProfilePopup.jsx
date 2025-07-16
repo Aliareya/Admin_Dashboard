@@ -1,6 +1,8 @@
 import React, { forwardRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const UserProfilePopup = forwardRef(({menu} , ref) => {
+  const navigate = useNavigate();
   return (
     <div
       ref={ref}
@@ -15,6 +17,7 @@ const UserProfilePopup = forwardRef(({menu} , ref) => {
         {menu && menu.length > 0 ? (
           menu.map((item, index) => (
             <p
+              onClick={()=>navigate(`${item.path}`)}
               key={index}
               className="text-[16px] text-gray-800 p-1 hover:bg-slate-100 rounded-sm cursor-pointer"
             >
